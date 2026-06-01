@@ -1,5 +1,0 @@
-# Daily ETL at 06:00 (adjust path and timezone)
-0 6 * * * cd /home/mehdi/Desktop/Tehran_realstate_project && ./run.sh >> logs/etl.log 2>&1
-
-# Optional: generate mock incoming data every day at 05:30
-# 30 5 * * * cd /home/mehdi/Desktop/Tehran_realstate_project && PYTHONPATH=. .venv/bin/python3 -m src.data_generator >> logs/generator.log 2>&1
