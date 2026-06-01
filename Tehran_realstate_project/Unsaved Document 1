@@ -1,0 +1,27 @@
+tehran-real-estate-pipeline/
+│
+├── dags/                      # فایل‌های DAG ایرفلو
+│   └── real_estate_pipeline.py
+│
+├── scripts/                   # اسکریپت‌های استخراج و تبدیل
+│   ├── scrape_divar.py
+│   ├── clean_transform.py
+│   └── load_to_db.py
+│
+├── notebooks/                 # اکسپلوریشن اولیه داده (اختیاری)
+│   └── exploratory.ipynb
+│
+├── data/                      # نمونه داده خام (gitignored برای حجم بالا)
+│   └── sample_raw.json
+│
+├── sql/                       # کوئری‌های ایجاد جدول
+│   └── create_tables.sql
+│
+├── dashboard/                 # فایل پاور بی‌آی (.pbix) و اسکرین‌شات
+│   └── real_estate_dashboard.pbix
+│
+├── docker-compose.yml         # راه‌اندازی PostgreSQL, Airflow, pgAdmin
+├── Dockerfile                 # برای سرویس‌های سفارشی
+├── requirements.txt
+├── .env.example
+└── README.md                  # توضیح کامل پروژه + اسکرین‌شات داشبورد
