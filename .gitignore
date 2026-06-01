@@ -1,0 +1,40 @@
+# Environment
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Data (keep structure, ignore generated files)
+data/raw/*
+!data/raw/.gitkeep
+!data/raw/TehranHouse.csv
+data/processed/*
+!data/processed/.gitkeep
+data/incoming/*
+!data/incoming/.gitkeep
+
+# Airflow
+logs/
+airflow.db
+
+# Root duplicate (canonical copy lives in data/raw/)
+/TehranHouse.csv
+
+# OS & IDE junk
+Unsaved Document*
+.idea/
+.vscode/
+.DS_Store
+*.swp
+
+# Logs
+logs/*
+!logs/.gitkeep
+
+# Power BI local cache
+dashboard/*.pbix
+!dashboard/README.md

@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run unit tests
+        run: pytest tests/ -v
+
+      - name: Run transform-only ETL
+        run: python -m src.etl_pipeline --skip-load
+
+  integration:
+    runs-on: ubuntu-latest
+    needs: test
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: tehran_estate
+          POSTGRES_PASSWORD: ci_test_password
+          POSTGRES_DB: tehran_real_estate
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U tehran_estate -d tehran_real_estate"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Initialize schema
+        env:
+          PGPASSWORD: ci_test_password
+        run: psql -h localhost -U tehran_estate -d tehran_real_estate -f sql/init.sql
+
+      - name: Run full ETL against PostgreSQL
+        env:
+          POSTGRES_USER: tehran_estate
+          POSTGRES_PASSWORD: ci_test_password
+          POSTGRES_DB: tehran_real_estate
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+        run: python -m src.etl_pipeline
+
+      - name: Assert row count
+        env:
+          PGPASSWORD: ci_test_password
+        run: |
+          COUNT=$(psql -h localhost -U tehran_estate -d tehran_real_estate -t -c "SELECT COUNT(*) FROM listings;")
+          COUNT=$(echo "$COUNT" | tr -d ' ')
+          test "$COUNT" -gt 3000
