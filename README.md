@@ -1,5 +1,5 @@
 # Tehran Real Estate Pipeline
-  still in progress...
+still in progress...
 **Batch ETL, PostgreSQL data warehouse, and Power BI dashboard** for Tehran residential property listings.
 
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
