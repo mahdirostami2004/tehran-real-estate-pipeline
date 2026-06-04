@@ -1,4 +1,7 @@
-# Power BI Dashboard
+# Power BI Dashboard 🚧
+
+> **Status:** Under construction — the dashboard file and preview will be added once completed.  
+> The connection guide below is ready for when you start building.
 
 This folder holds the Power BI report for the Tehran Real Estate project.
 
@@ -22,7 +25,5 @@ This folder holds the Power BI report for the Tehran Real Estate project.
 
 ## Files
 
-- `real_estate_dashboard.pbix` — save your report here (gitignored; export manually)
-- `dashboard_preview.png` — screenshot for README
-
-After building the dashboard, add a screenshot to this folder and link it from the main README.
+- `real_estate_dashboard.pbix` — dashboard source file (**not yet created**; gitignored, export manually)
+- `dashboard_preview.png` — screenshot for the main README (**placeholder coming soon**)
